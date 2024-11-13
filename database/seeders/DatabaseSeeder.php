@@ -6,7 +6,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Speciality;
 use App\Models\HealthInsurance;
-
+use App\Models\Office;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -39,6 +39,13 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => 1,
                 'cinsurance_name' => " SIN OBRA SOCIAL"
+            ]
+        );
+
+        Office::create(
+            [
+                'id' => 1,
+                'coffice_name' => "CONSULTORIO 1"
             ]
         );
 
