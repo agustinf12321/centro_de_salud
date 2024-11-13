@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Speciality\SpecialityController; //especialidades
 use App\Http\Controllers\HealthInsurance\HealthInsuranceController; //seguros
+use App\Http\Controllers\Office\OfficeController; // consultorios
 
 
 Route::get('/', function () {
@@ -40,7 +41,7 @@ Route::get('/specialities/edit/{id}',[ SpecialityController::class, 'edit'])
 
 Route::get('/specialities/delete/{id}',[ SpecialityController::class, 'destroy'])
 ->name('specialities.delete');
-// fin rutas de especialidades3
+// fin rutas de especialidades
 
 //rutas de obras sociales
 Route::get('/insurances',[ HealthInsuranceController::class, 'index'])
@@ -61,6 +62,26 @@ Route::get('/insurances/edit/{id}',[ HealthInsuranceController::class, 'edit'])
 Route::get('/insurances/delete/{id}',[ HealthInsuranceController::class, 'destroy'])
 ->name('insurances.delete');
 // fin rutas de obras sociales
+
+// rutas de consultorios
+Route::get('/offices',[ OfficeController::class, 'index'])
+->name('offices.index');
+
+Route::get('/offices/create',[ OfficeController::class, 'create'])
+->name('offices.create');
+
+Route::post('/offices/store',[ OfficeController::class, 'store'])
+->name('offices.store');
+
+Route::post('/offices/update',[ OfficeController::class, 'update'])
+->name('offices.update');
+
+Route::get('/offices/edit/{id}',[ OfficeController::class, 'edit'])
+->name('offices.edit');
+
+Route::get('/offices/delete/{id}',[ OfficeController::class, 'destroy'])
+->name('offices.delete');
+// fin rutas de consultorios
 
 
 
