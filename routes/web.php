@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Speciality\SpecialityController; //especialidades
 use App\Http\Controllers\HealthInsurance\HealthInsuranceController; //seguros
 use App\Http\Controllers\Office\OfficeController; // consultorios
-
+use App\Http\Controllers\Doctor\DoctorController; // doctores
 
 Route::get('/', function () {
     return view('welcome');
@@ -84,6 +84,26 @@ Route::get('/offices/delete/{id}',[ OfficeController::class, 'destroy'])
 // fin rutas de consultorios
 
 
+
+// rutas de doctores
+Route::get('/doctors',[ DoctorController::class, 'index'])
+->name('doctors.index');
+
+Route::get('/doctors/create',[ DoctorController::class, 'create'])
+->name('doctors.create');
+
+Route::post('/doctors/store',[ DoctorController::class, 'store'])
+->name('doctors.store');
+
+Route::post('/doctors/update',[ DoctorController::class, 'update'])
+->name('doctors.update');
+
+Route::get('/doctors/edit/{id}',[ DoctorController::class, 'edit'])
+->name('doctors.edit');
+
+Route::get('/doctors/delete/{id}',[ DoctorController::class, 'destroy'])
+->name('doctors.delete');
+// fin rutas de doctores
 
 
 

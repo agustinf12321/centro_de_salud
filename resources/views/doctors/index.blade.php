@@ -2,12 +2,12 @@
 @section('content')
 
 <div>
-    <h1 class="text-3xl font-bold mt-2 ml-2">Lista de Consultorios</h1>
+    <h1 class="text-3xl font-bold mt-2 ml-2">Lista de Doctores</h1>
 
     {{-- boton de nuevo --}}
     <div class="flex justify-end">
-        <a href="{{ route('offices.create') }}">
-            <button type="button" title="Agregar un Consultorio"
+        <a href="{{ route('doctors.create') }}">
+            <button type="button" title="Agregar un Doctor"
                 class="flex items-center rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -15,7 +15,7 @@
                     <path
                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                 </svg>
-                <span class="ml-2">Nuevo Consultorio</span>
+                <span class="ml-2">Nuevo Doctor</span>
             </button>
         </a>
     </div>
@@ -29,27 +29,41 @@
                             class="border-b border-neutral-200 bg-white font-medium dark:border-white/10 dark:bg-body-dark text-black">
                             <tr>
                                 <th scope="col" class="px-6 py-4">#</th>
-                                <th scope="col" class="px-6 py-4 w-[50%] text-center">NOMBRE</th>
+                                <th scope="col" class="px-6 py-4 text-center">NOMBRE</th>
+                                <th scope="col" class="px-6 py-4 text-center">DNI</th>
+                                <th scope="col" class="px-6 py-4 text-center">DIRECCION</th>
+                                <th scope="col" class="px-6 py-4 text-center">ESPECIALIDAD</th>
+                                <th scope="col" class="px-6 py-4 text-center">MATRICULA N°</th>
+                                <th scope="col" class="px-6 py-4 text-center">CELULAR</th>
+                                <th scope="col" class="px-6 py-4 text-center">INICIO</th>
                                 <th scope="col" class="px-6 py-4 text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($offices as $office)
+                            @foreach ($doctors as $doctor)
 
                             <tr class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
-                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $office->id}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$office->coffice_name}}</td>
+                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $doctor->id}}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cdoctor_name}}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->ndoctor_dni}}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cdoctor_address}}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cspeciality_name}}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->ndoctor_tuition}}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cdoctor_phone}}</td>
+                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->ddoctor_startdate}}</td>
+
+
                                 <td class="whitespace-nowrap px-6 py-4">
                                     <div class="flex justify-center">
-                                        <a href="{{ route('offices.edit', $office->id )}}">
+                                        <a href="{{ route('doctors.edit', $doctor->id )}}">
                                             <button
                                                 class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                                                 data-twe-ripple-init data-twe-ripple-color="light">
                                                 Editar
                                             </button>
                                         </a>
-                                        <a href="{{ route('offices.delete', $office->id )}}">
+                                        <a href="{{ route('doctors.delete', $doctor->id )}}">
                                             <button
                                                 class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong ml-2"
                                                 data-twe-ripple-init data-twe-ripple-color="light">
@@ -66,7 +80,7 @@
                         </tbody>
                     </table>
 
-                    {{ $offices->links() }}
+                    {{ $doctors->links() }}
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        $offices = Office::where('id','<>   ',1)
+        $offices = Office::where('id','<>',1)
         ->orwhere('id',1)
         ->orderBy('coffice_name','asc')
         ->paginate(5); 
