@@ -79,7 +79,7 @@ class OfficeController extends Controller
      */
     public function update(Request $request)
     {
-            
+        
         //validaciones 
         $rules = [
             'coffice_name' => 'required|unique:offices,coffice_name,'.$request->id,

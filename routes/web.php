@@ -8,6 +8,8 @@ use App\Http\Controllers\Speciality\SpecialityController; //especialidades
 use App\Http\Controllers\HealthInsurance\HealthInsuranceController; //seguros
 use App\Http\Controllers\Office\OfficeController; // consultorios
 use App\Http\Controllers\Doctor\DoctorController; // doctores
+use App\Http\Controllers\Patient\PatientController; // pacientes
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -63,6 +65,9 @@ Route::get('/insurances/delete/{id}',[ HealthInsuranceController::class, 'destro
 ->name('insurances.delete');
 // fin rutas de obras sociales
 
+
+
+
 // rutas de consultorios
 Route::get('/offices',[ OfficeController::class, 'index'])
 ->name('offices.index');
@@ -104,6 +109,28 @@ Route::get('/doctors/edit/{id}',[ DoctorController::class, 'edit'])
 Route::get('/doctors/delete/{id}',[ DoctorController::class, 'destroy'])
 ->name('doctors.delete');
 // fin rutas de doctores
+
+
+
+// rutas de pacientes
+Route::get('/patients',[ PatientController::class, 'index'])
+->name('patients.index');
+
+Route::get('/patients/create',[ PatientController::class, 'create'])
+->name('patients.create');
+
+Route::post('/patients/store',[ PatientController::class, 'store'])
+->name('patients.store');
+
+Route::post('/patients/update',[ PatientController::class, 'update'])
+->name('patients.update');
+
+Route::get('/patients/edit/{id}',[ PatientController::class, 'edit'])
+->name('patients.edit');
+
+Route::get('/patients/delete/{id}',[ PatientController::class, 'destroy'])
+->name('patients.delete');
+// fin rutas de pacientes
 
 
 

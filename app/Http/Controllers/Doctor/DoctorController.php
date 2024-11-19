@@ -94,7 +94,9 @@ class DoctorController extends Controller
     {
         $doctor = Doctor::find($id);
 
-        return view('doctors.edit', ['doctor' => $doctor]);
+        $specialities = Speciality::get();
+
+        return view('doctors.edit', ['doctor' => $doctor, 'specialities'=>$specialities]);
 
     }
 
@@ -104,28 +106,41 @@ class DoctorController extends Controller
     public function update(Request $request)
     {
 
-        //validaciones
-        $rules = [
-            'cdoctor_name' => 'required|unique:doctors,cdoctor_name,'.$request->id,
+         //validaciones
+         $rules = [
+            'ndoctor_dni' => 'required|unique:doctors,ndoctor_dni,'.$request->id,
+            'ndoctor_tuition' => 'required|unique:doctors,ndoctor_tuition,'.$request->id,
+            'cdoctor_phone' => 'required|unique:doctors,cdoctor_phone,'.$request->id,
         ];
 
         $messages = [
-            'cdoctor_name.required' => '* El nombre es obligatorio *',
-            'cdoctor_name.unique' => '* El nombre YA EXISTE *',
+            'ndoctor_dni.required' => '* El DNI es obligatorio *',
+            'ndoctor_dni.unique' => '* El DNI YA EXISTE *',
+            'ndoctor_tuition.required' => '* LA MATRICULA ES OBLIGATORIA *',
+            'ndoctor_tuition.unique' => '* LA MATRICULA YA EXISTE *',
+            'cdoctor_phone.required' => '* EL TELEFONO ES OBLIGATORIO *',
+            'cdoctor_phone.unique' => '* EL TELEFONO YA EXISTE *',
         ];
 
         $request->validate($rules, $messages);
 
-        //cargo las variables con los datosdel formulario
         $doctor_id = $request->id;
-        $cdoctor_name = strtoupper($request->coffice_name);
+        $cdoctor_name = strtoupper($request->cdoctor_name);
+        $cdoctor_address = strtoupper($request->cdoctor_address);
 
-        //buscar el registro de obras sociales para actualizar
-        $cdoctor = Doctor::find( $doctor_id );
+    
+        //buscar el registro de doctores para actualizar
+        $doctor = Doctor::find( $doctor_id );
 
-        $cdoctor->update(
+        $doctor->update(
             [
-                'cdoctor_name' => $cdoctor_name ,
+                'cdoctor_name' => $cdoctor_name,
+               'ndoctor_dni' => $request->ndoctor_dni,
+               'cdoctor_address' => $cdoctor_address,
+               'id_speciality' => $request->id_speciality,
+               'ndoctor_tuition' => $request->ndoctor_tuition,
+               'cdoctor_phone' => $request->cdoctor_phone,
+               'ddoctor_startdate' => $request->ddoctor_startdate,
             ]
         );
 
