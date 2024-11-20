@@ -94,7 +94,7 @@ class DoctorController extends Controller
     {
         $doctor = Doctor::find($id);
 
-        $specialities = Speciality::get();
+        $specialities = Speciality::orderBy('cspeciality_name','asc')->get();
 
         return view('doctors.edit', ['doctor' => $doctor, 'specialities'=>$specialities]);
 
