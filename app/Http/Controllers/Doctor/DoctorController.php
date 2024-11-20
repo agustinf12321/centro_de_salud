@@ -17,8 +17,15 @@ class DoctorController extends Controller
     public function index()
     {
 
+        $specialities = Speciality::orderBy('cspeciality_name','asc')->get();
+
+        $nombre = strtoupper(request('doctor'));
+        $especialidad  = request('especialidad');
+
         $doctors = Doctor::join('specialities', 'doctors.id_speciality', "=", "specialities.id")
         ->select('doctors.*', 'specialities.cspeciality_name')
+        ->where('cdoctor_name','like','%' . $nombre . '%')
+        ->where('id_speciality','like','%' . $especialidad . '%')
         ->orderBy('cdoctor_name','asc')
         ->paginate(5);
         // $doctors = Doctor::where('id','<>',1)
@@ -30,7 +37,7 @@ class DoctorController extends Controller
 
            // dd($doctors);
 
-        return view('doctors.index',['doctors' => $doctors]);
+        return view('doctors.index',['doctors' => $doctors,'specialities'=>$specialities]);
 
     }
 

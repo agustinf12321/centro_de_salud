@@ -20,6 +20,21 @@
         </a>
     </div>
 
+    <div>
+        <form action="{{route('doctors.index')}}">
+            <label for="doctor">Doctor:</label>
+            <input type="text" name="doctor" id="doctor">
+            <label for="especialidad">especialidad</label>
+            <select name="especialidad" id="especialidad">
+                <option value="">Cualquier especialidad</option>
+                @foreach ($specialities as $speciality)
+                    <option value="{{$speciality->id}}">{{ $speciality->cspeciality_name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
