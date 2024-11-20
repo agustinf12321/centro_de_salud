@@ -17,9 +17,16 @@ class PatientController extends Controller
      */
     public function index()
     {
+        $nombre = strtoupper(request('paciente'));
+        $obrasocial = request('obrasocial');
+
+        $insurances = HealthInsurance::get();
+
 
         $patients = Patient::join('health_insurances', 'patients.id_insurance', "=", "health_insurances.id")
         ->select('patients.*', 'health_insurances.cinsurance_name')
+        ->where('cpatient_name','like','%' . $nombre . '%')
+        ->where('id_insurance','like','%' . $obrasocial . '%')
         ->orderBy('cpatient_name','asc')
         ->paginate(5);
         // $doctors = Doctor::where('id','<>',1)
@@ -30,7 +37,7 @@ class PatientController extends Controller
         //si quiero traer todos los registros utiizo ->get()
 
 
-        return view('patients.index',['patients' => $patients]);
+        return view('patients.index',['patients' => $patients, 'insurances' => $insurances]);
 
     }
 

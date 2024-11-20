@@ -20,6 +20,21 @@
         </a>
     </div>
 
+    <div>
+        <form action="{{route('patients.index')}}">
+            <label for="paciente">Paciente:</label>
+            <input type="text" name="paciente" id="paciente">
+            <label for="obrasocial">Obra Social</label>
+            <select name="obrasocial" id="obrasocial">
+                <option value="">Cualquier Obra Social</option>
+                @foreach ($insurances as $insurance)
+                    <option value="{{$insurance->id}}">{{ $insurance->cinsurance_name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
