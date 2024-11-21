@@ -9,6 +9,7 @@ use App\Http\Controllers\HealthInsurance\HealthInsuranceController; //seguros
 use App\Http\Controllers\Office\OfficeController; // consultorios
 use App\Http\Controllers\Doctor\DoctorController; // doctores
 use App\Http\Controllers\Patient\PatientController; // pacientes
+use App\Http\Controllers\Appointment\AppointmentController; // turnos
 
 
 Route::get('/', function () {
@@ -131,6 +132,27 @@ Route::get('/patients/edit/{id}',[ PatientController::class, 'edit'])
 Route::get('/patients/delete/{id}',[ PatientController::class, 'destroy'])
 ->name('patients.delete');
 // fin rutas de pacientes
+
+// rutas de turnos
+Route::get('/appointments',[ AppointmentController::class, 'index'])
+->name('appointments.index');
+
+Route::get('/appointments/create',[ AppointmentController::class, 'create'])
+->name('appointments.create');
+
+Route::post('/appointments/store',[ AppointmentController::class, 'store'])
+->name('appointments.store');
+
+Route::post('/appointments/update',[ AppointmentController::class, 'update'])
+->name('appointments.update');
+
+Route::get('/appointments/edit/{id}',[ AppointmentController::class, 'edit'])
+->name('appointments.edit');
+
+Route::get('/appointments/delete/{id}',[ AppointmentController::class, 'destroy'])
+->name('appointments.delete');
+// fin rutas de turnos
+
 
 
 
