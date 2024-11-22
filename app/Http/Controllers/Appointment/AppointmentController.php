@@ -47,9 +47,13 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        $specialities = Speciality::get();
+        $patients = Patient::get();
+        $doctors = Doctor::get();
+        $offices = Office::get();
+        $insurance = HealthInsurance::get();
 
-        return view('appointments.create',['specialities'=>$specialities]);
+
+        return view('appointments.create',['patients'=>$patients,'doctors'=>$doctors,'offices'=>$offices,'insurance'=>$insurance,]);
     }
 
     /**
@@ -59,35 +63,38 @@ class AppointmentController extends Controller
     {
         //validaciones
         $rules = [
-            'ndoctor_dni' => 'required|unique:doctors,ndoctor_dni',
-            'ndoctor_tuition' => 'required|unique:doctors,ndoctor_tuition',
-            'cdoctor_phone' => 'required|unique:doctors,cdoctor_phone',
+            'dtappointment_date' => 'required',
         ];
 
         $messages = [
-            'ndoctor_dni.required' => '* El DNI es obligatorio *',
-            'ndoctor_dni.unique' => '* El DNI YA EXISTE *',
-            'ndoctor_tuition.required' => '* LA MATRICULA ES OBLIGATORIA *',
-            'ndoctor_tuition.unique' => '* LA MATRICULA YA EXISTE *',
-            'cdoctor_phone.required' => '* EL TELEFONO ES OBLIGATORIO *',
-            'cdoctor_phone.unique' => '* EL TELEFONO YA EXISTE *',
+            'dtappointment_date.required' => '* Ingrese una fecha valida *',
         ];
 
         $request->validate($rules, $messages);
 
+        //buscar obra social en base al paciente
 
-        $cdoctor_name = strtoupper($request->cdoctor_name);
-        $cdoctor_address = strtoupper($request->cdoctor_address);
+        $patient = Patient::find($request->id_patient);
 
-        Doctor::create(
+
+        $date = $request->dtappointment_date;
+        $id_patient = $request->id_patient;
+        $id_doctor = $request->id_doctor;
+        $id_office = $request->id_office;
+        $id_insurance = $patient->HealthInsurance->id;
+        $request->id_insurance;
+
+
+
+
+
+        Appointment::create(
             [
-               'cdoctor_name' => $cdoctor_name,
-               'ndoctor_dni' => $request->ndoctor_dni,
-               'cdoctor_address' => $cdoctor_address,
-               'id_speciality' => $request->id_speciality,
-               'ndoctor_tuition' => $request->ndoctor_tuition,
-               'cdoctor_phone' => $request->cdoctor_phone,
-               'ddoctor_startdate' => $request->ddoctor_startdate,
+               'dtappointment_date' => $date,
+               'id_patient' => $id_patient,
+               'id_doctor' => $id_doctor,
+               'id_office' => $id_office,
+               'id_insurance' => $id_insurance,
             ]
 
         );
@@ -102,9 +109,9 @@ class AppointmentController extends Controller
     {
         $doctor = Doctor::find($id);
 
-        $specialities = Speciality::orderBy('cspeciality_name','asc')->get();
+        
 
-        return view('appointments.edit', ['doctor' => $doctor, 'specialities'=>$specialities]);
+        return view('appointments.edit', ['doctor' => $doctor]);
 
     }
 

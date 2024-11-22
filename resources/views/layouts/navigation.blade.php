@@ -15,6 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('offices.index')" :active="request()->routeIs('offices.index')">
+                        {{ __('Consultorios') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('doctors.index')" :active="request()->routeIs('doctors.index')">
+                        {{ __('Doctores') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('insurances.index')" :active="request()->routeIs('insurances.index')">
+                        {{ __('Obras Sociales') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('patients.index')" :active="request()->routeIs('patients.index')">
+                        {{ __('Pacientes') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('appointments.index')" :active="request()->routeIs('appointments.index')">
+                        {{ __('Turnos') }}
+                    </x-nav-link>
                 </div>
             </div>
 
