@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('offices.index')" :active="request()->routeIs('offices.index')">
                         {{ __('Consultorios') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('specialities.index')" :active="request()->routeIs('specialities.index')">
+                        {{ __('Especialidades') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('doctors.index')" :active="request()->routeIs('doctors.index')">
                         {{ __('Doctores') }}
                     </x-nav-link>

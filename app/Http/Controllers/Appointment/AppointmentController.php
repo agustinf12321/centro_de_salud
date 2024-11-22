@@ -20,13 +20,23 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //cargar tablas paciente, doctor, consultorio, obra social
+        //cargar tablas paciente, doctor
+        $patients = Patient::orderBy('cpatient_name','asc')
+        ->get();
+        $doctors = Doctor::orderBy('cdoctor_name','asc')
+        ->get();
+
+        $doctor = request('doctor');
+        $paciente = request('paciente');
+
 
         $appointments = Appointment::join('patients', 'appointments.id_patient', "=", "patients.id")
         ->join('doctors', 'appointments.id_doctor', "=", "doctors.id")
         ->join('offices', 'appointments.id_office', "=", "offices.id")
         ->join('health_insurances', 'appointments.id_insurance', "=", "health_insurances.id")
         ->select('appointments.*', 'patients.cpatient_name', 'doctors.cdoctor_name', 'offices.coffice_name', 'health_insurances.cinsurance_name')
+        ->where('cdoctor_name','like','%' . $doctor . '%')
+        ->where('cpatient_name','like','%' . $paciente . '%')
         ->orderBy('dtappointment_date','asc')
         ->paginate(5);
         // $doctors = Doctor::where('id','<>',1)
@@ -38,7 +48,7 @@ class AppointmentController extends Controller
 
            // dd($doctors);
 
-        return view('appointments.index',['appointments' => $appointments]);
+        return view('appointments.index',['appointments' => $appointments, 'patients'=> $patients, 'doctors'=> $doctors]);
 
     }
 
@@ -107,11 +117,16 @@ class AppointmentController extends Controller
      */
     public function edit($id)
     {
-        $doctor = Doctor::find($id);
+        $appointment = Appointment::find($id);
+
+        $patients = Patient::get();
+        $doctors = Doctor::get();
+        $offices = Office::get();
+        $insurance = HealthInsurance::get();
 
         
 
-        return view('appointments.edit', ['doctor' => $doctor]);
+        return view('appointments.edit', ['appointment'=>$appointment,'patients'=>$patients,'doctors'=>$doctors,'offices'=>$offices,'insurance'=>$insurance,]);
 
     }
 
@@ -122,40 +137,43 @@ class AppointmentController extends Controller
     {
 
          //validaciones
-         $rules = [
-            'ndoctor_dni' => 'required|unique:doctors,ndoctor_dni,'.$request->id,
-            'ndoctor_tuition' => 'required|unique:doctors,ndoctor_tuition,'.$request->id,
-            'cdoctor_phone' => 'required|unique:doctors,cdoctor_phone,'.$request->id,
+        $rules = [
+            'dtappointment_date' => 'required',
         ];
 
         $messages = [
-            'ndoctor_dni.required' => '* El DNI es obligatorio *',
-            'ndoctor_dni.unique' => '* El DNI YA EXISTE *',
-            'ndoctor_tuition.required' => '* LA MATRICULA ES OBLIGATORIA *',
-            'ndoctor_tuition.unique' => '* LA MATRICULA YA EXISTE *',
-            'cdoctor_phone.required' => '* EL TELEFONO ES OBLIGATORIO *',
-            'cdoctor_phone.unique' => '* EL TELEFONO YA EXISTE *',
+            'dtappointment_date.required' => '* Ingrese una fecha valida *',
         ];
 
         $request->validate($rules, $messages);
 
-        $doctor_id = $request->id;
-        $cdoctor_name = strtoupper($request->cdoctor_name);
-        $cdoctor_address = strtoupper($request->cdoctor_address);
+        $appointment_id = $request->id;
 
     
-        //buscar el registro de doctores para actualizar
-        $doctor = Doctor::find( $doctor_id );
+        //buscar el registro de turno para actualizar
+        $appointment = Appointment::find($appointment_id);
 
-        $doctor->update(
+        //buscar obra social en base al paciente
+
+        $patient = Patient::find($request->id_patient);
+
+
+        $date = $request->dtappointment_date;
+        $id_patient = $request->id_patient;
+        $id_doctor = $request->id_doctor;
+        $id_office = $request->id_office;
+        $id_insurance = $patient->HealthInsurance->id;
+        $request->id_insurance;
+
+        
+
+        $appointment->update(
             [
-                'cdoctor_name' => $cdoctor_name,
-               'ndoctor_dni' => $request->ndoctor_dni,
-               'cdoctor_address' => $cdoctor_address,
-               'id_speciality' => $request->id_speciality,
-               'ndoctor_tuition' => $request->ndoctor_tuition,
-               'cdoctor_phone' => $request->cdoctor_phone,
-               'ddoctor_startdate' => $request->ddoctor_startdate,
+               'dtappointment_date' => $date,
+               'id_patient' => $id_patient,
+               'id_doctor' => $id_doctor,
+               'id_office' => $id_office,
+               'id_insurance' => $id_insurance,
             ]
         );
 
