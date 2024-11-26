@@ -20,15 +20,17 @@
         </a>
     </div>
 
+    {{-- Filtro de pacientes --}}
+
     <div>
-        <form action="{{route('patients.index')}}">
+        <form action="{{route('patients.index')}}" method="GET">
             <label for="paciente">Paciente:</label>
-            <input type="text" name="paciente" id="paciente">
+            <input type="text" name="paciente" id="paciente" value="{{ request('paciente') }}">
             <label for="obrasocial">Obra Social</label>
             <select name="obrasocial" id="obrasocial">
                 <option value="">Cualquier Obra Social</option>
                 @foreach ($insurances as $insurance)
-                    <option value="{{$insurance->id}}">{{ $insurance->cinsurance_name }}</option>
+                    <option value="{{$insurance->id}}" {{ request('obrasocial') == $insurance->id ? 'selected' : '' }}>{{ $insurance->cinsurance_name }}</option>
                 @endforeach
             </select>
             <button type="submit" class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">Filtrar</button>
