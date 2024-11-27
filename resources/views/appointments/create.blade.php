@@ -8,6 +8,7 @@
 
             <h1 class="text-2xl font-bold mt-2 ml-2 mb-2">Nuevo Turno</h1>
             <!--Nombre Paciente-->
+            <label for="id_office">Paciente</label>
             <div class="relative mb-12">
                 <select name="id_patient" id="patient">
                     <option value="" disabled>Seleccione un paciente</option>
@@ -25,10 +26,10 @@
             </div>
 
             <!--Nombre Doctor-->
+            <label for="id_office">Doctor</label>
             <div class="relative mb-12">
-                
                 <select name="id_doctor" id="id_doctor">
-                    <option value="" disabled>Seleccione un paciente</option>
+                    <option value="" disabled>Seleccione un doctor</option>
                     @foreach ($doctors as $doctor)
                         <option value=" {{$doctor->id}} ">{{$doctor->cdoctor_name}}</option>
                     @endforeach
@@ -43,9 +44,10 @@
             </div>
 
             <!--consultorio input-->
+            <label for="id_office">Consultorio</label>
             <div class="relative mb-12">
                 <select name="id_office" id="office">
-                    <option value="" disabled selected>Seleccione un paciente</option>
+                    <option value="" disabled selected>Seleccione un consultorio</option>
                     @foreach ($offices as $office)
                         <option value="{{$office->id}}">{{$office->coffice_name}}</option>
                     @endforeach
