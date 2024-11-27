@@ -41,11 +41,11 @@
     {{-- orden de la lista --}}
     <label for="orden">Ordenar por: </label>
     <select name="orden" id="orden">
-        <option value="0" {{ request('orden') == $orden ? 'selected' : '' }}>Nombre</option>
-        <option value="1" {{ request('orden') == $orden ? 'selected' : '' }}>DNI</option>
-        <option value="2" {{ request('orden') == $orden ? 'selected' : '' }}>Sexo</option>
-        <option value="3" {{ request('orden') == $orden ? 'selected' : '' }}>Fecha de nacimiento</option>
-        <option value="4" {{ request('orden') == $orden ? 'selected' : '' }}>Obra social</option>
+        <option value="0" {{ request('orden') == 0 ? 'selected' : '' }}>Nombre</option>
+        <option value="1" {{ request('orden') == 1 ? 'selected' : '' }}>DNI</option>
+        <option value="2" {{ request('orden') == 2 ? 'selected' : '' }}>Sexo</option>
+        <option value="3" {{ request('orden') == 3 ? 'selected' : '' }}>Fecha de nacimiento</option>
+        <option value="4" {{ request('orden') == 4 ? 'selected' : '' }}>Obra social</option>
     </select>
 
     <div class="flex flex-col">

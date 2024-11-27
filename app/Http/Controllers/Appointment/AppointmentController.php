@@ -31,6 +31,13 @@ class AppointmentController extends Controller
         $paciente = request('paciente');
         $orden = request('orden');
 
+        if($orden == "") {
+            $orden = 0;
+        }
+        else {
+            $orden = request('orden');
+        }
+
         $orderby = 'dtappointment_date';
 
         switch ($orden) {

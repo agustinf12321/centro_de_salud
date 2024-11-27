@@ -24,6 +24,14 @@ class DoctorController extends Controller
 
         $orden = request('orden');
 
+        if($orden == "") {
+            $orden = 0;
+        }
+        else {
+            $orden = request('orden');
+        }
+        
+
         $orderby = 'cdoctor_name';
 
         switch ($orden) {

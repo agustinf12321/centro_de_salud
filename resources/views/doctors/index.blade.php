@@ -37,9 +37,9 @@
             {{-- orden de la lista --}}
             <label for="orden">Ordenar por: </label>
             <select name="orden" id="orden">
-                <option value="0" {{ request('orden') == $orden ? 'selected' : '' }}>Nombre</option>
-                <option value="1" {{ request('orden') == $orden ? 'selected' : '' }}>Especialidad</option>
-                <option value="2" {{ request('orden') == $orden ? 'selected' : '' }}>Fecha de inicio</option>
+                <option value="0" {{ request('orden') == 0 ? 'selected' : '' }}>Nombre</option>
+                <option value="1" {{ request('orden') == 1 ? 'selected' : '' }}>Especialidad</option>
+                <option value="2" {{ request('orden') == 2 ? 'selected' : '' }}>Fecha de inicio</option>
             </select>
 
             <button type="submit" class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">Filtrar</button>

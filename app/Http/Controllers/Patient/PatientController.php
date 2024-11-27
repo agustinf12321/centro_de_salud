@@ -24,6 +24,13 @@ class PatientController extends Controller
 
         $orden = request('orden');
 
+        if($orden == "") {
+            $orden = 0;
+        }
+        else {
+            $orden = request('orden');
+        }
+
         $orderby = 'cpatient_name';
 
         switch ($orden) {
@@ -52,7 +59,7 @@ class PatientController extends Controller
         ->select('patients.*', 'health_insurances.cinsurance_name')
         ->where('cpatient_name','like','%' . $nombre . '%')
         ->where('id_insurance','like','%' . $obrasocial . '%')
-        ->orderBy('cpatient_name','asc')
+        ->orderBy($orderby,'asc')
         ->paginate(5);
         // $doctors = Doctor::where('id','<>',1)
         // ->orwhere('id',1)
