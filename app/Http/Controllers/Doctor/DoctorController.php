@@ -22,11 +22,32 @@ class DoctorController extends Controller
         $nombre = strtoupper(request('doctor'));
         $especialidad  = request('especialidad');
 
+        $orden = request('orden');
+
+        $orderby = 'cdoctor_name';
+
+        switch ($orden) {
+            case 0:
+                $orderby = 'cdoctor_name';
+                break;
+            case 1:
+                $orderby = 'cspeciality_name';
+                break;
+            case 2:
+                $orderby = 'ddoctor_startdate';
+                break;
+            default:
+                $orderby = 'cdoctor_name';
+                break;
+        }
+
+
+
         $doctors = Doctor::join('specialities', 'doctors.id_speciality', "=", "specialities.id")
         ->select('doctors.*', 'specialities.cspeciality_name')
         ->where('cdoctor_name','like','%' . $nombre . '%')
         ->where('id_speciality','like','%' . $especialidad . '%')
-        ->orderBy('cdoctor_name','asc')
+        ->orderBy($orderby,'asc')
         ->paginate(5);
         // $doctors = Doctor::where('id','<>',1)
         // ->orwhere('id',1)
@@ -37,7 +58,7 @@ class DoctorController extends Controller
 
            // dd($doctors);
 
-        return view('doctors.index',['doctors' => $doctors,'specialities'=>$specialities]);
+        return view('doctors.index',['doctors' => $doctors,'specialities'=>$specialities,  'orden' => $orden,]);
 
     }
 

@@ -31,7 +31,7 @@
                 <select name="id_doctor" id="id_doctor">
                     <option value="" disabled>Seleccione un doctor</option>
                     @foreach ($doctors as $doctor)
-                        <option value=" {{$doctor->id}} ">{{$doctor->cdoctor_name}}</option>
+                        <option value=" {{$doctor->id}} ">{{$doctor->cdoctor_name . " - " . $doctor->speciality->cspeciality_name}}</option>
                     @endforeach
                 </select>
 

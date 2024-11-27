@@ -22,6 +22,31 @@ class PatientController extends Controller
 
         $insurances = HealthInsurance::get();
 
+        $orden = request('orden');
+
+        $orderby = 'cpatient_name';
+
+        switch ($orden) {
+            case 0:
+                $orderby = 'cpatient_name';
+                break;
+            case 1:
+                $orderby = 'npatient_dni';
+                break;
+            case 2:
+                $orderby = 'cpatient_sex';
+                break;
+            case 3:
+                $orderby = 'dpatient_birthdate';
+                break;
+            case 4:
+                $orderby = 'cinsurance_name';
+                break;
+            default:
+                $orderby = 'cpatient_name';
+                break;
+        }
+
 
         $patients = Patient::join('health_insurances', 'patients.id_insurance', "=", "health_insurances.id")
         ->select('patients.*', 'health_insurances.cinsurance_name')
@@ -37,7 +62,7 @@ class PatientController extends Controller
         //si quiero traer todos los registros utiizo ->get()
 
 
-        return view('patients.index',['patients' => $patients, 'insurances' => $insurances]);
+        return view('patients.index',['patients' => $patients, 'insurances' => $insurances, 'orden' => $orden,]);
 
     }
 

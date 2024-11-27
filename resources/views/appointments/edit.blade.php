@@ -34,13 +34,13 @@
             <div class="relative mb-12">
                 
                 <select name="id_doctor" id="id_doctor">
-                    <option value="" disabled>Seleccione un paciente</option>
+                    <option value="" disabled>Seleccione un doctor</option>
                     @foreach ($doctors as $doctor)
                         <option value=" {{$doctor->id}} "
                             @if ($doctor->id == $appointment->id_doctor)
                                 SELECTED
                             @endif
-                            >{{$doctor->cdoctor_name}}</option>
+                            >{{$doctor->cdoctor_name . " - " . $doctor->speciality->cspeciality_name}}</option>
                     @endforeach
                 </select>
 
@@ -55,7 +55,7 @@
             <!--consultorio input-->
             <div class="relative mb-12">
                 <select name="id_office" id="office">
-                    <option value="" disabled selected>Seleccione un paciente</option>
+                    <option value="" disabled selected>Seleccione un consultorio</option>
                     @foreach ($offices as $office)
                         <option value="{{$office->id}}"
                             @if ($office->id == $appointment->id_office)
@@ -77,8 +77,8 @@
             <div class="relative mb-12">
                 <input type="datetime-local"
                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                    id="dtappointment_date" name="dtappointment_date" placeholder="Fecha de inicio doctor"
-                    value="{{ $appointment->dtappointment_date }}" required autofocus/>
+                    id="dtappointment_date" name="dtappointment_date" placeholder="Fecha del turno"
+                    value="{{ $appointment->dtappointment_date }}" required/>
 
                 <label for="dtappointment_date"
                     class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-valid:-translate-y-[0.95rem] peer-valid:scale-[0.8] peer-focus:-translate-y-[0.95rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary">Fecha del Turno

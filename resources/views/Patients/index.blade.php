@@ -38,6 +38,16 @@
         </form>
     </div>
 
+    {{-- orden de la lista --}}
+    <label for="orden">Ordenar por: </label>
+    <select name="orden" id="orden">
+        <option value="0" {{ request('orden') == $orden ? 'selected' : '' }}>Nombre</option>
+        <option value="1" {{ request('orden') == $orden ? 'selected' : '' }}>DNI</option>
+        <option value="2" {{ request('orden') == $orden ? 'selected' : '' }}>Sexo</option>
+        <option value="3" {{ request('orden') == $orden ? 'selected' : '' }}>Fecha de nacimiento</option>
+        <option value="4" {{ request('orden') == $orden ? 'selected' : '' }}>Obra social</option>
+    </select>
+
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
