@@ -137,6 +137,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/appointments', [AppointmentController::class, 'index'])
         ->name('appointments.index');
 
+    Route::get('/appointments/history', [AppointmentController::class, 'history'])
+        ->name('appointments.history');
+
     Route::get('/appointments/create', [AppointmentController::class, 'create'])
         ->name('appointments.create');
 
