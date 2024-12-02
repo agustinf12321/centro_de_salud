@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 
+use App\Http\Controllers\Doctor\DoctorController; // doctores
+use App\Http\Controllers\Appointment\PDFAppointmentController;
+use App\Http\Controllers\Patient\PatientController; // pacientes
+use App\Http\Controllers\Office\OfficeController; // consultorios
+use App\Http\Controllers\Appointment\AppointmentController; // turnos
 use App\Http\Controllers\Speciality\SpecialityController; //especialidades
 use App\Http\Controllers\HealthInsurance\HealthInsuranceController; //seguros
-use App\Http\Controllers\Office\OfficeController; // consultorios
-use App\Http\Controllers\Doctor\DoctorController; // doctores
-use App\Http\Controllers\Patient\PatientController; // pacientes
-use App\Http\Controllers\Appointment\AppointmentController; // turnos
 
 
 Route::get('/', function () {
@@ -154,6 +155,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/appointments/delete/{id}', [AppointmentController::class, 'destroy'])
         ->name('appointments.delete');
+
+    Route::get('/appointments/print/{id}', [PDFAppointmentController::class, 'print'])
+        ->name('appointments.print');
     // fin rutas de turnos
 
 
