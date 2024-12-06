@@ -15,7 +15,7 @@ use App\Http\Controllers\HealthInsurance\HealthInsuranceController; //seguros
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -161,6 +161,8 @@ Route::middleware('auth')->group(function () {
 
 
 });
+
+
 
 Route::get('/appointments/request', [AppointmentController::class, 'request'])
         ->name('appointments.request');
