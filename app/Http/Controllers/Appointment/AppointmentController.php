@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Appointment;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Doctor;
+use App\Models\Office;
 
 //modelos
 use App\Models\Patient;
-use App\Models\Doctor;
-use App\Models\Office;
-use App\Models\HealthInsurance;
-use App\Models\Appointment;
 use App\Models\Speciality;
+use App\Models\Appointment;
+use Illuminate\Http\Request;
+use App\Models\HealthInsurance;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 
 
 class AppointmentController extends Controller
@@ -294,5 +295,38 @@ class AppointmentController extends Controller
         $doctor->delete();
 
         return redirect()->route('appointments.index');
+    }
+
+    public function request() {
+        return view('appointments.request');
+    }
+
+    public function patient(Request $request) {
+
+        //validaciones
+        $rules = [
+            'npatient_dni' => 'required',
+            'npatient_dni' => Rule::exists('patients', 'npatient_dni')
+        ];
+
+        $messages = [
+            'npatient_dni.required' => 'El campo es obligatorio',
+            'npatient_dni.exists' => 'No se encontró un paciente con ese documento',
+        ];
+
+
+        $request->validate($rules, $messages);
+
+        $dni = request('npatient_dni');
+
+        $id = Patient::where('npatient_dni', $dni)->value('id');
+
+        $appointments = Appointment::where('id_patient', $id)
+        ->orderBy('dtappointment_date', 'asc')
+        ->paginate(6);
+
+        return view('appointments.patient', ['appointments' => $appointments]);
+
+
     }
 }

@@ -156,11 +156,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/appointments/delete/{id}', [AppointmentController::class, 'destroy'])
         ->name('appointments.delete');
 
-    Route::get('/appointments/print/{id}', [PDFAppointmentController::class, 'print'])
-        ->name('appointments.print');
+    
     // fin rutas de turnos
 
 
 });
+
+Route::get('/appointments/request', [AppointmentController::class, 'request'])
+        ->name('appointments.request');
+
+Route::post('/appointments/patient', [AppointmentController::class, 'patient'])
+        ->name('appointments.patient');
+
+Route::get('/appointments/print/{id}', [PDFAppointmentController::class, 'print'])
+        ->name('appointments.print');
 
 require __DIR__ . '/auth.php';
