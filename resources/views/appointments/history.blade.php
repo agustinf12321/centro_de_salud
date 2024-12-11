@@ -1,118 +1,118 @@
 @extends('layouts.master')
 @section('content')
 
-<div>
-    <h1 class="text-3xl font-bold mt-2 ml-2">Turnos</h1>
+<div class="container mx-auto px-4 py-6">
+    <!-- Título -->
+    <h1 class="text-4xl font-semibold text-gray-800 mb-6">Historial de Turnos</h1>
 
-    {{-- boton de nuevo --}}
-    <div class="flex justify-end">
+    <!-- Botón de volver -->
+    <div class="flex justify-end gap-4 mb-4">
         <a href="{{ route('appointments.index') }}">
             <button type="button" title="Volver a Turnos"
-                class="flex items-center rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-plus-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path
-                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                </svg>
-                <span class="ml-2">Volver a Turnos</span>
+                class="flex items-center bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-4 py-2 rounded shadow-md transition duration-200">
+                Volver a Turnos
             </button>
         </a>
     </div>
 
-    <div>
-        <form action="{{route('appointments.history')}}">
-            <label for="paciente">Paciente:</label>
-            <select name="paciente" id="paciente">
-                <option value="">TODOS LOS PACIENTES</option>
-                @foreach ($patients as $patient)
-                    <option value="{{$patient->cpatient_name}}" {{ request('paciente') == $patient->cpatient_name ? 'selected' : '' }}> {{$patient->cpatient_name}} </option>
-                @endforeach
-            </select>
-            <label for="doctor">Doctor:</label>
-            <select name="doctor" id="doctor">
-                <option value="" selected>TODOS LOS DOCTORES</option>
-                @foreach ($doctors as $doctor)
-                    <option value="{{$doctor->cdoctor_name}}" {{ request('doctor') == $doctor->cdoctor_name ? 'selected' : '' }}> {{$doctor->cdoctor_name}} </option>
-                @endforeach
-            </select>
-
-            {{-- orden de la lista --}}
-            <label for="orden">Ordenar por: </label>
-            <select name="orden" id="orden">
-                <option value="0" {{ request('orden') == 0 ? 'selected' : '' }}>Fecha</option>
-                <option value="1" {{ request('orden') == 1 ? 'selected' : '' }}>Doctor</option>
-                <option value="2" {{ request('orden') == 2 ? 'selected' : '' }}>Paciente</option>
-                <option value="3" {{ request('orden') == 3 ? 'selected' : '' }}>Consultorio</option>
-                <option value="4" {{ request('orden') == 4 ? 'selected' : '' }}>Obra social</option>
-            </select>
-
-            <button type="submit" class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">Filtrar</button>
-            <button type="reset" class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong ml-2">Limpiar</button>
+    <!-- Filtros -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <form action="{{ route('appointments.history') }}" method="GET">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Paciente -->
+                <div>
+                    <label for="paciente" class="block text-sm font-medium text-gray-700">Paciente:</label>
+                    <select name="paciente" id="paciente"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Seleccione un paciente...</option>
+                        @foreach ($patients as $patient)
+                        <option value="{{ $patient->cpatient_name }}" {{ request('paciente') == $patient->cpatient_name ? 'selected' : '' }}>
+                            {{ $patient->cpatient_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Doctor -->
+                <div>
+                    <label for="doctor" class="block text-sm font-medium text-gray-700">Doctor:</label>
+                    <select name="doctor" id="doctor"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Seleccione un doctor...</option>
+                        @foreach ($doctors as $doctor)
+                        <option value="{{ $doctor->cdoctor_name }}" {{ request('doctor') == $doctor->cdoctor_name ? 'selected' : '' }}>
+                            {{ $doctor->cdoctor_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Orden -->
+                <div>
+                    <label for="orden" class="block text-sm font-medium text-gray-700">Ordenar por:</label>
+                    <select name="orden" id="orden"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="0" {{ request('orden') == 0 ? 'selected' : '' }}>Fecha</option>
+                        <option value="1" {{ request('orden') == 1 ? 'selected' : '' }}>Doctor</option>
+                        <option value="2" {{ request('orden') == 2 ? 'selected' : '' }}>Paciente</option>
+                        <option value="3" {{ request('orden') == 3 ? 'selected' : '' }}>Consultorio</option>
+                        <option value="4" {{ request('orden') == 4 ? 'selected' : '' }}>Obra social</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-center gap-4 mt-6">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow-md">Filtrar</button>
+                <button type="reset" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded shadow-md">Limpiar</button>
+            </div>
         </form>
     </div>
 
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full text-left text-sm font-light text-surface dark:text-black">
-                        <thead
-                            class="border-b border-neutral-200 bg-white font-medium dark:border-white/10 dark:bg-body-dark text-black">
-                            <tr>
-                                <th scope="col" class="px-6 py-4 text-center">FECHA</th>
-                                <th scope="col" class="px-6 py-4 text-center">PACIENTE</th>
-                                <th scope="col" class="px-6 py-4 text-center">DOCTOR</th>
-                                <th scope="col" class="px-6 py-4 text-center">CONSULTORIO</th>
-                                <th scope="col" class="px-6 py-4 text-center">OBRA SOCIAL</th>
-                                <th scope="col" class="px-6 py-4 text-center">ACCIONES</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach ($appointments as $appointment)
-
-                            <tr class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
-                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $appointment->dtappointment_date}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$appointment->cpatient_name}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$appointment->cdoctor_name}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$appointment->coffice_name}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$appointment->cinsurance_name}}</td>
-
-
-                                <td class="whitespace-nowrap px-6 py-4">
-                                    <div class="flex justify-center">
-                                        <a href=" {{route('appointments.print',$appointment->id )}} " target="_BLANK">Imprimir</a>
-                                        <a href="{{ route('appointments.edit', $appointment->id )}}">
-                                            <button
-                                                class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                                                data-twe-ripple-init data-twe-ripple-color="light">
-                                                Editar
-                                            </button>
-                                        </a>
-                                        <a href="{{ route('appointments.delete', $appointment->id )}}">
-                                            <button
-                                                class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong ml-2"
-                                                data-twe-ripple-init data-twe-ripple-color="light">
-                                                Eliminar
-                                            </button>
-                                        </a>
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            @endforeach
-
-                        </tbody>
-                    </table>
-
-                    {{ $appointments->links() }}
-                </div>
-            </div>
+    <!-- Tabla -->
+    <div class="overflow-hidden border rounded-lg shadow">
+        <table class="min-w-full bg-white">
+            <thead class="bg-blue-600 text-gray-100 uppercase text-sm">
+                <tr>
+                    <th class="px-6 py-4 text-center">FECHA</th>
+                    <th class="px-6 py-4 text-center">PACIENTE</th>
+                    <th class="px-6 py-4 text-center">DOCTOR</th>
+                    <th class="px-6 py-4 text-center">CONSULTORIO</th>
+                    <th class="px-6 py-4 text-center">OBRA SOCIAL</th>
+                    <th class="px-6 py-4 text-center">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @foreach ($appointments as $appointment)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-center">{{ $appointment->dtappointment_date }}</td>
+                    <td class="px-6 py-4 text-center">{{ $appointment->cpatient_name }}</td>
+                    <td class="px-6 py-4 text-center">{{ $appointment->cdoctor_name }}</td>
+                    <td class="px-6 py-4 text-center">{{ $appointment->coffice_name }}</td>
+                    <td class="px-6 py-4 text-center">{{ $appointment->cinsurance_name }}</td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex justify-center gap-2">
+                            <a href="{{ route('appointments.print', $appointment->id) }}" target="_BLANK" class="flex items-center text-blue-500 hover:underline"><span class="[&>svg]:h-5 [&>svg]:w-5">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M7.875 1.5C6.839 1.5 6 2.34 6 3.375v2.99c-.426.053-.851.11-1.274.174-1.454.218-2.476 1.483-2.476 2.917v6.294a3 3 0 003 3h.27l-.155 1.705A1.875 1.875 0 007.232 22.5h9.536a1.875 1.875 0 001.867-2.045l-.155-1.705h.27a3 3 0 003-3V9.456c0-1.434-1.022-2.7-2.476-2.917A48.716 48.716 0 0018 6.366V3.375c0-1.036-.84-1.875-1.875-1.875h-8.25zM16.5 6.205v-2.83A.375.375 0 0016.125 3h-8.25a.375.375 0 00-.375.375v2.83a49.353 49.353 0 019 0zm-.217 8.265c.178.018.317.16.333.337l.526 5.784a.375.375 0 01-.374.409H7.232a.375.375 0 01-.374-.409l.526-5.784a.373.373 0 01.333-.337 41.741 41.741 0 018.566 0zm.967-3.97a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H18a.75.75 0 01-.75-.75V10.5zM15 9.75a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V10.5a.75.75 0 00-.75-.75H15z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span></a>
+                            <a href="{{ route('appointments.edit', $appointment->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md">Editar</a>
+                            <a href="{{ route('appointments.delete', $appointment->id) }}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div class="bg-gray-50 px-4 py-3 border-t">
+            {{ $appointments->links() }}
         </div>
     </div>
-
 </div>
+
+@include ('layouts.footer')
 
 @endsection

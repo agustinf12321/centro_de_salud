@@ -1,77 +1,64 @@
 @extends('layouts.master')
 @section('content')
 
-<div>
-    <h1 class="text-3xl font-bold mt-2 ml-2">Lista de Obras Sociales</h1>
+<div class="container mx-auto px-4 py-6">
+    <!-- Título -->
+    <h1 class="text-4xl font-semibold text-gray-800 mb-6">Lista de Obras Sociales</h1>
 
-    {{-- boton de nuevo --}}
-    <div class="flex justify-end">
+    <!-- Botón Nueva Obra Social -->
+    <div class="mb-4 flex justify-end">
         <a href="{{ route('insurances.create') }}">
-            <button type="button" title="Agregar una Obra Social"
-                class="flex items-center rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-plus-circle" viewBox="0 0 16 16">
+            <button class="flex items-center bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded shadow-md transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle mr-2" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path
-                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                 </svg>
-                <span class="ml-2">Nueva Obra Social</span>
+                Nueva Obra Social
             </button>
         </a>
     </div>
 
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full text-left text-sm font-light text-surface dark:text-black">
-                        <thead
-                            class="border-b border-neutral-200 bg-white font-medium dark:border-white/10 dark:bg-body-dark text-black">
-                            <tr>
-                                <th scope="col" class="px-6 py-4">#</th>
-                                <th scope="col" class="px-6 py-4 w-[50%] text-center">NOMBRE</th>
-                                <th scope="col" class="px-6 py-4 text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+    <!-- Tabla -->
+    <div class="overflow-hidden border rounded-lg shadow">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-blue-600 border-b text-gray-100 uppercase text-sm">
+                    <th class="px-6 py-4 text-left">#</th>
+                    <th class="px-6 py-4 text-center">Nombre</th>
+                    <th class="px-6 py-4 text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @foreach ($insurances as $insurance)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-gray-800">{{ $insurance->id }}</td>
+                    <td class="px-6 py-4 text-center text-gray-800">{{ $insurance->cinsurance_name }}</td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex justify-center space-x-3">
+                            <a href="{{ route('insurances.edit', $insurance->id) }}">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium shadow transition duration-200">
+                                    Editar
+                                </button>
+                            </a>
+                            <a href="{{ route('insurances.delete', $insurance->id) }}">
+                                <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium shadow transition duration-200">
+                                    Eliminar
+                                </button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-                            @foreach ($insurances as $insurance)
-
-                            <tr class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
-                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $insurance->id}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$insurance->cinsurance_name}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">
-                                    <div class="flex justify-center">
-                                        <a href="{{ route('insurances.edit', $insurance->id )}}">
-                                            <button
-                                                class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                                                data-twe-ripple-init data-twe-ripple-color="light">
-                                                Editar
-                                            </button>
-                                        </a>
-                                        <a href="{{ route('insurances.delete', $insurance->id )}}">
-                                            <button
-                                                class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong ml-2"
-                                                data-twe-ripple-init data-twe-ripple-color="light">
-                                                Eliminar
-                                            </button>
-                                        </a>
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            @endforeach
-
-                        </tbody>
-                    </table>
-
-                    {{ $insurances->links() }}
-                </div>
-            </div>
+        <!-- Paginación -->
+        <div class="bg-gray-50 px-4 py-3 border-t flex items-center justify-between">
+            {{ $insurances->links() }}
         </div>
     </div>
-
 </div>
+
+@include ('layouts.footer')
 
 @endsection

@@ -1,120 +1,107 @@
 @extends('layouts.master')
 @section('content')
-<div class="flex vh-100">
-    <div class="justify-center items-center mx-auto block w-1/2 rounded-lg bg-white p-6 shadow-4 dark:bg-surface-dark">
-        <form action="{{ route('appointments.update')}}" method="POST">
-
+<div class="flex py-5 items-center justify-center bg-gray-100">
+    <div class="w-4/5 md:w-1/2 lg:w-1/3 bg-white rounded-lg shadow-lg p-8">
+        <form action="{{ route('appointments.update') }}" method="POST">
             @csrf
 
-            <input type="hidden" name="id" value="{{$appointment->id}}">
+            <!-- ID oculto -->
+            <input type="hidden" name="id" value="{{ $appointment->id }}">
 
-            <h1 class="text-2xl font-bold mt-2 ml-2 mb-2">Nuevo Turno</h1>
-            <!--Nombre Paciente-->
-            <div class="relative mb-12">
-                <select name="id_patient" id="patient">
+            <h1 class="text-2xl font-bold mb-6">Editar Turno</h1>
+
+            <!-- Selección de Paciente -->
+            <div class="relative mb-6">
+                <label for="id_patient" class="block text-sm font-medium text-gray-700">
+                    Paciente
+                </label>
+                <select name="id_patient" id="id_patient" 
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="" disabled>Seleccione un paciente</option>
                     @foreach ($patients as $patient)
-                        <option value=" {{$patient->id}} "
-                            @if ($patient->id == $appointment->id_patient)
-                                SELECTED
-                            @endif
-                            >{{$patient->cpatient_name}}</option>
+                        <option value="{{ $patient->id }}" 
+                            @if ($patient->id == $appointment->id_patient) selected @endif>
+                            {{ $patient->cpatient_name }}
+                        </option>
                     @endforeach
                 </select>
-
-                <label for="id_patient"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-valid:-translate-y-[0.95rem] peer-valid:scale-[0.8] peer-focus:-translate-y-[0.95rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary">Paciente
-                </label>
                 @error('id_patient')
-                <span class="text-red-500">{{ $message }}</span>
+                <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
-            <!--Nombre Doctor-->
-            <div class="relative mb-12">
-                
-                <select name="id_doctor" id="id_doctor">
+            <!-- Selección de Doctor -->
+            <div class="relative mb-6">
+                <label for="id_doctor" class="block text-sm font-medium text-gray-700">
+                    Doctor
+                </label>
+                <select name="id_doctor" id="id_doctor" 
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="" disabled>Seleccione un doctor</option>
                     @foreach ($doctors as $doctor)
-                        <option value=" {{$doctor->id}} "
-                            @if ($doctor->id == $appointment->id_doctor)
-                                SELECTED
-                            @endif
-                            >{{$doctor->cdoctor_name . " - " . $doctor->speciality->cspeciality_name}}</option>
+                        <option value="{{ $doctor->id }}" 
+                            @if ($doctor->id == $appointment->id_doctor) selected @endif>
+                            {{ $doctor->cdoctor_name }} - {{ $doctor->speciality->cspeciality_name }}
+                        </option>
                     @endforeach
                 </select>
-
-                <label for="id_doctor"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-valid:-translate-y-[0.95rem] peer-valid:scale-[0.8] peer-focus:-translate-y-[0.95rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary">Doctor
-                </label>
                 @error('id_doctor')
-                <span class="text-red-500">{{ $message }}</span>
+                <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
-            <!--consultorio input-->
-            <div class="relative mb-12">
-                <select name="id_office" id="office">
+            <!-- Selección de Consultorio -->
+            <div class="relative mb-6">
+                <label for="id_office" class="block text-sm font-medium text-gray-700">
+                    Consultorio
+                </label>
+                <select name="id_office" id="id_office" 
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="" disabled selected>Seleccione un consultorio</option>
                     @foreach ($offices as $office)
-                        <option value="{{$office->id}}"
-                            @if ($office->id == $appointment->id_office)
-                                SELECTED
-                            @endif
-                            >{{$office->coffice_name}}</option>
+                        <option value="{{ $office->id }}" 
+                            @if ($office->id == $appointment->id_office) selected @endif>
+                            {{ $office->coffice_name }}
+                        </option>
                     @endforeach
                 </select>
-
-                <label for="id_office"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-valid:-translate-y-[0.95rem] peer-valid:scale-[0.8] peer-focus:-translate-y-[0.95rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary">Consultorio
-                </label>
-                {{-- @error('cdoctor _name') --}}
-                {{-- <span class="text-red-500">{{ $message }}</span>
-                @enderror --}}
-            </div>
-            
-            <!--FECHA INICIO input-->
-            <div class="relative mb-12">
-                <input type="datetime-local"
-                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
-                    id="dtappointment_date" name="dtappointment_date" placeholder="Fecha del turno"
-                    value="{{ $appointment->dtappointment_date }}" required/>
-
-                <label for="dtappointment_date"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-valid:-translate-y-[0.95rem] peer-valid:scale-[0.8] peer-focus:-translate-y-[0.95rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-300 dark:peer-focus:text-primary">Fecha del Turno
-                </label>
-                {{-- @error('cdoctor _name')
-                <span class="text-red-500">{{ $message }}</span>
-                @enderror --}}
+                @error('id_office')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
             </div>
 
-            <div class="flex">
-                <div class="flex justify-start w-1/2">
-                    <a href="{{ route('appointments.index') }}">
-                        <span
-                            class="inline-block rounded bg-yellow-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                            data-twe-ripple-init data-twe-ripple-color="light">
-                            Volver
-                        </span>
-                    </a>
-                </div>
+            <!-- Fecha del Turno -->
+            <div class="relative mb-6">
+                <label for="dtappointment_date" class="block text-sm font-medium text-gray-700">
+                    Fecha del Turno
+                </label>
+                <input type="datetime-local" id="dtappointment_date" name="dtappointment_date" 
+                       class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                       value="{{ $appointment->dtappointment_date }}" required>
+                @error('dtappointment_date')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
 
-                <div class="flex justify-end w-1/2">
-                    <!--Submit button-->
-                    <button type="submit"
-                        class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                        data-twe-ripple-init data-twe-ripple-color="light">
-                        Guardar
-                    </button>
-
-                    <button type="reset"
-                        class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong ml-2"
-                        data-twe-ripple-init data-twe-ripple-color="light">
+            <!-- Botones -->
+            <div class="flex justify-between items-center">
+                <a href="{{ route('appointments.index') }}" 
+                   class="inline-block rounded bg-yellow-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-yellow-500 focus:outline-none focus:ring focus:ring-yellow-400">
+                    Volver
+                </a>
+                <div class="space-x-2">
+                    <button type="reset" 
+                            class="inline-block rounded bg-red-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-400">
                         Cancelar
+                    </button>
+                    <button type="submit" 
+                            class="inline-block rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-400">
+                        Guardar
                     </button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
 @endsection

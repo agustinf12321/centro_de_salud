@@ -1,118 +1,108 @@
 @extends('layouts.master')
 @section('content')
 
-<div>
-    <h1 class="text-3xl font-bold mt-2 ml-2">Lista de Doctores</h1>
+<div class="container mx-auto px-4 py-6">
+    <!-- Título -->
+    <h1 class="text-4xl font-semibold text-gray-800 mb-6">Lista de Doctores</h1>
 
-    {{-- boton de nuevo --}}
-    <div class="flex justify-end">
+    <!-- Botón: Nuevo Doctor -->
+    <div class="flex justify-end gap-4 mb-4">
         <a href="{{ route('doctors.create') }}">
             <button type="button" title="Agregar un Doctor"
-                class="flex items-center rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-plus-circle" viewBox="0 0 16 16">
+                class="flex items-center bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded shadow-md transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle mr-2" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path
-                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                 </svg>
-                <span class="ml-2">Nuevo Doctor</span>
+                Nuevo Doctor
             </button>
         </a>
     </div>
 
-{{-- filtro doctores --}}
-
-    <div>
-        <form action="{{route('doctors.index')}}" method="GET">
-            <label for="doctor">Doctor:</label>
-            <input type="text" name="doctor" id="doctor" value="{{ request('doctor') }}">
-            <label for="especialidad">especialidad</label>
-            <select name="especialidad" id="especialidad">
-                <option value="">Cualquier especialidad</option>
-                @foreach ($specialities as $speciality)
-                    <option value="{{$speciality->id}}" {{ request('especialidad') == $speciality->id ? 'selected' : '' }}>{{ $speciality->cspeciality_name }}</option>
-                @endforeach
-            </select>
-
-            {{-- orden de la lista --}}
-            <label for="orden">Ordenar por: </label>
-            <select name="orden" id="orden">
-                <option value="0" {{ request('orden') == 0 ? 'selected' : '' }}>Nombre</option>
-                <option value="1" {{ request('orden') == 1 ? 'selected' : '' }}>Especialidad</option>
-                <option value="2" {{ request('orden') == 2 ? 'selected' : '' }}>Fecha de inicio</option>
-            </select>
-
-            <button type="submit" class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">Filtrar</button>
-            <button type="reset" class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong ml-2">Limpiar</button>
+    <!-- Filtros -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <form action="{{ route('doctors.index') }}" method="GET">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Nombre del Doctor -->
+                <div>
+                    <label for="doctor" class="block text-sm font-medium text-gray-700">Doctor:</label>
+                    <input type="text" name="doctor" id="doctor" placeholder="Nombre del doctor..." value="{{ request('doctor') }}"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <!-- Especialidad -->
+                <div>
+                    <label for="especialidad" class="block text-sm font-medium text-gray-700">Especialidad:</label>
+                    <select name="especialidad" id="especialidad"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Seleccione una especialidad...</option>
+                        @foreach ($specialities as $speciality)
+                        <option value="{{ $speciality->id }}" {{ request('especialidad') == $speciality->id ? 'selected' : '' }}>
+                            {{ $speciality->cspeciality_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Ordenar por -->
+                <div>
+                    <label for="orden" class="block text-sm font-medium text-gray-700">Ordenar por:</label>
+                    <select name="orden" id="orden"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="0" {{ request('orden') == 0 ? 'selected' : '' }}>Nombre</option>
+                        <option value="1" {{ request('orden') == 1 ? 'selected' : '' }}>Especialidad</option>
+                        <option value="2" {{ request('orden') == 2 ? 'selected' : '' }}>Fecha de inicio</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-center gap-4 mt-6">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow-md">Filtrar</button>
+                <button type="reset" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded shadow-md">Limpiar</button>
+            </div>
         </form>
     </div>
 
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full text-left text-sm font-light text-surface dark:text-black">
-                        <thead
-                            class="border-b border-neutral-200 bg-white font-medium dark:border-white/10 dark:bg-body-dark text-black">
-                            <tr>
-                                <th scope="col" class="px-6 py-4">#</th>
-                                <th scope="col" class="px-6 py-4 text-center">NOMBRE</th>
-                                <th scope="col" class="px-6 py-4 text-center">DNI</th>
-                                <th scope="col" class="px-6 py-4 text-center">DIRECCION</th>
-                                <th scope="col" class="px-6 py-4 text-center">ESPECIALIDAD</th>
-                                <th scope="col" class="px-6 py-4 text-center">MATRICULA N°</th>
-                                <th scope="col" class="px-6 py-4 text-center">CELULAR</th>
-                                <th scope="col" class="px-6 py-4 text-center">INICIO</th>
-                                <th scope="col" class="px-6 py-4 text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach ($doctors as $doctor)
-
-                            <tr class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
-                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $doctor->id}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cdoctor_name}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->ndoctor_dni}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cdoctor_address}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cspeciality_name}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->ndoctor_tuition}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->cdoctor_phone}}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{$doctor->ddoctor_startdate}}</td>
-
-
-                                <td class="whitespace-nowrap px-6 py-4">
-                                    <div class="flex justify-center">
-                                        <a href="{{ route('doctors.edit', $doctor->id )}}">
-                                            <button
-                                                class="inline-block rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                                                data-twe-ripple-init data-twe-ripple-color="light">
-                                                Editar
-                                            </button>
-                                        </a>
-                                        <a href="{{ route('doctors.delete', $doctor->id )}}">
-                                            <button
-                                                class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong ml-2"
-                                                data-twe-ripple-init data-twe-ripple-color="light">
-                                                Eliminar
-                                            </button>
-                                        </a>
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            @endforeach
-
-                        </tbody>
-                    </table>
-
-                    {{ $doctors->links() }}
-                </div>
-            </div>
+    <!-- Tabla -->
+    <div class="overflow-hidden border rounded-lg shadow">
+        <table class="min-w-full bg-white">
+            <thead class="bg-blue-600 text-gray-100 uppercase text-sm">
+                <tr>
+                    <th class="px-6 py-4 text-center">#</th>
+                    <th class="px-6 py-4 text-center">Nombre</th>
+                    <th class="px-6 py-4 text-center">DNI</th>
+                    <th class="px-6 py-4 text-center">Dirección</th>
+                    <th class="px-6 py-4 text-center">Especialidad</th>
+                    <th class="px-6 py-4 text-center">Matrícula N°</th>
+                    <th class="px-6 py-4 text-center">Celular</th>
+                    <th class="px-6 py-4 text-center">Inicio</th>
+                    <th class="px-6 py-4 text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @foreach ($doctors as $doctor)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-center">{{ $doctor->id }}</td>
+                    <td class="px-6 py-4 text-center">{{ $doctor->cdoctor_name }}</td>
+                    <td class="px-6 py-4 text-center">{{ $doctor->ndoctor_dni }}</td>
+                    <td class="px-6 py-4 text-center">{{ $doctor->cdoctor_address }}</td>
+                    <td class="px-6 py-4 text-center">{{ $doctor->cspeciality_name }}</td>
+                    <td class="px-6 py-4 text-center">{{ $doctor->ndoctor_tuition }}</td>
+                    <td class="px-6 py-4 text-center">{{ $doctor->cdoctor_phone }}</td>
+                    <td class="px-6 py-4 text-center">{{ $doctor->ddoctor_startdate }}</td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex justify-center gap-2">
+                            <a href="{{ route('doctors.edit', $doctor->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md">Editar</a>
+                            <a href="{{ route('doctors.delete', $doctor->id) }}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div class="bg-gray-50 px-4 py-3 border-t">
+            {{ $doctors->links() }}
         </div>
     </div>
-
 </div>
+
+@include ('layouts.footer')
 
 @endsection
