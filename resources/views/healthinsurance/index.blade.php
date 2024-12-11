@@ -53,8 +53,37 @@
         </table>
 
         <!-- Paginación -->
-        <div class="bg-gray-50 px-4 py-3 border-t flex items-center justify-between">
-            {{ $insurances->links() }}
+        <div class="bg-gray-50 px-4 py-3 border-t">
+            <div class="flex justify-center items-center space-x-2">
+                @if ($insurances->onFirstPage())
+                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">Anterior</span>
+                @else
+                <a href="{{ $insurances->previousPageUrl() }}"
+                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                    Anterior
+                </a>
+                @endif
+
+                @foreach ($insurances->getUrlRange(1, $insurances->lastPage()) as $page => $url)
+                @if ($page == $insurances->currentPage())
+                <span class="px-3 py-1 bg-blue-600 text-white rounded font-bold">{{ $page }}</span>
+                @else
+                <a href="{{ $url }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-blue-500 hover:text-white transition">
+                    {{ $page }}
+                </a>
+                @endif
+                @endforeach
+
+                @if ($insurances->hasMorePages())
+                <a href="{{ $insurances->nextPageUrl() }}"
+                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                    Siguiente
+                </a>
+                @else
+                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">Siguiente</span>
+                @endif
+            </div>
         </div>
     </div>
 </div>

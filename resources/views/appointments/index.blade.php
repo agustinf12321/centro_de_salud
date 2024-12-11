@@ -122,9 +122,41 @@
                 @endforeach
             </tbody>
         </table>
+
+        <!-- Paginación -->
         <div class="bg-gray-50 px-4 py-3 border-t">
-            {{ $appointments->links() }}
+            <div class="flex justify-center items-center space-x-2">
+                @if ($appointments->onFirstPage())
+                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">Anterior</span>
+                @else
+                <a href="{{ $appointments->previousPageUrl() }}"
+                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                    Anterior
+                </a>
+                @endif
+
+                @foreach ($appointments->getUrlRange(1, $appointments->lastPage()) as $page => $url)
+                @if ($page == $appointments->currentPage())
+                <span class="px-3 py-1 bg-blue-600 text-white rounded font-bold">{{ $page }}</span>
+                @else
+                <a href="{{ $url }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-blue-500 hover:text-white transition">
+                    {{ $page }}
+                </a>
+                @endif
+                @endforeach
+
+                @if ($appointments->hasMorePages())
+                <a href="{{ $appointments->nextPageUrl() }}"
+                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                    Siguiente
+                </a>
+                @else
+                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">Siguiente</span>
+                @endif
+            </div>
         </div>
+
     </div>
 </div>
 

@@ -89,6 +89,20 @@
                 @enderror
             </div>
 
+            <!-- Celular -->
+            <div class="relative mb-6">
+                <label for="cdoctor_phone" class="block text-sm font-medium text-gray-700 mb-1">Celular</label>
+                <input type="text" id="cdoctor_phone" name="cdoctor_phone" value="{{ old('ndoctor_phone') }}" required
+                    class="peer w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+            </div>
+
+            <!-- Fecha de Inicio -->
+            <div class="relative mb-6">
+                <label for="ddoctor_startdate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Inicio</label>
+                <input type="date" id="ddoctor_startdate" name="ddoctor_startdate" value="{{ old('ndoctor_startdate') }}" required
+                    class="peer w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+            </div>
+
             <!-- Botones -->
             <div class="flex justify-between">
                 <a href="{{ route('doctors.index') }}"

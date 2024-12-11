@@ -97,9 +97,46 @@
                 @endforeach
             </tbody>
         </table>
+
+        <!-- Paginación -->
         <div class="bg-gray-50 px-4 py-3 border-t">
-            {{ $doctors->links() }}
+            <div class="flex justify-center items-center space-x-2">
+                @if ($doctors->onFirstPage())
+                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">Anterior</span>
+                @else
+                <a href="{{ $doctors->previousPageUrl() }}"
+                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                    Anterior
+                </a>
+                @endif
+
+                @foreach ($doctors->getUrlRange(1, $doctors->lastPage()) as $page => $url)
+                @if ($page == $doctors->currentPage())
+                <span class="px-3 py-1 bg-blue-600 text-white rounded font-bold">{{ $page }}</span>
+                @else
+                <a href="{{ $url }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-blue-500 hover:text-white transition">
+                    {{ $page }}
+                </a>
+                @endif
+                @endforeach
+
+                @if ($doctors->hasMorePages())
+                <a href="{{ $doctors->nextPageUrl() }}"
+                    class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                    Siguiente
+                </a>
+                @else
+                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">Siguiente</span>
+                @endif
+            </div>
         </div>
+
+    </div>
+</div>
+
+
+
     </div>
 </div>
 
